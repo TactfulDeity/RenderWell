@@ -1,2 +1,2 @@
 # RenderWell
-THe backend codebase for PageOasis
+The backend codebase for PageOasis
