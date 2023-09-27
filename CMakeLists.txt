@@ -71,16 +71,16 @@ set(RENDERWELL_HEADERS
     ${RENDERWELL_SOURCE_DIR}/Renderer.hpp
     ${RENDERWELL_SOURCE_DIR}/Settings.hpp
     ${RENDERWELL_SOURCE_DIR}/Sorter.hpp
+    ${RENDERWELL_SOURCE_DIR}/Types.hpp
 )
 
 set(RENDERWELL_SRCS
     ${RENDERWELL_SOURCE_DIR}/BackendManager.cpp
-    ${RENDERWELL_SOURCE_DIR}/EBook.cpp
-    ${RENDERWELL_SOURCE_DIR}/List.cpp
+    # ${RENDERWELL_SOURCE_DIR}/EBook.cpp
+    # ${RENDERWELL_SOURCE_DIR}/List.cpp
     ${RENDERWELL_SOURCE_DIR}/ListManager.cpp
     ${RENDERWELL_SOURCE_DIR}/Renderer.cpp
     ${RENDERWELL_SOURCE_DIR}/Settings.cpp
-    ${RENDERWELL_SOURCE_DIR}/Sorter.cpp
 )
 
 target_sources(RenderWell
