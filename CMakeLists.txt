@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.20)
 
 project(RenderWell
   VERSION 0.0.1
-  DESCRIPTION "EBook Backend"
+  DESCRIPTION "PageOasis EBook Backend"
   HOMEPAGE_URL "https://github.com/TactfulDeity/RenderWell"
   LANGUAGES CXX
 )

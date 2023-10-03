@@ -1,4 +1,5 @@
 # Default ignored files
+/CMakeUserPresets.json
 /.idea/*
 /shelf/
 /workspace.xml

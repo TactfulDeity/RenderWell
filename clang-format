@@ -1,0 +1,29 @@
+---
+Language: Cpp
+AllowShortFunctionsOnASingleLine: false
+AlwaysBreakTemplateDeclarations: true
+BraceWrapping:
+  AfterClass: true
+  AfterControlStatement: true
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterObjCDeclaration: false
+  AfterStruct: true
+  AfterUnion: false
+  BeforeCatch: false
+  BeforeElse: true
+  IndentBraces: false
+BreakBeforeBraces: Custom
+BreakBeforeTernaryOperators: false
+BreakConstructorInitializersBeforeComma: true
+ColumnLimit: 200
+ConstructorInitializerIndentWidth: 0
+PenaltyReturnTypeOnItsOwnLine: 100
+PointerAlignment: Left
+SortIncludes: true
+SpaceBeforeParens: Never 
+Standard: Cpp17
+TabWidth: 2
+UseTab: Never
+...
