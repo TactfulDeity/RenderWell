@@ -5,6 +5,11 @@ Class Sorter
 {
 public:
     // Declare Constructor and Destructor
+    Sorter()
+    {
+
+    }
+    ~Sorter() noexcept = default;
     // Declare copy and move constructors
 
     std::vector<unsigned long> operator()()
