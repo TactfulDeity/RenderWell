@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.27.6)
 
 project(RenderWell
   VERSION 0.0.1
@@ -8,6 +8,7 @@ project(RenderWell
 )
 
 set(RENDERWELL_BIN_DIR ${PROJECT_BINARY_DIR}/bin)
+set(RENDERWELL_GENERATED_HEADER_DIR ${PROJECT_BINARY_DIR}/generated)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -65,9 +66,11 @@ set(RENDERWELL_SOURCE_DIR ${RenderWell_SOURCE_DIR}/src/RenderWell)
 
 set(RENDERWELL_HEADERS
     ${RENDERWELL_SOURCE_DIR}/BackendManager.hpp
+    ${RENDERWELL_SOURCE_DIR}/DataBase.hpp
     ${RENDERWELL_SOURCE_DIR}/EBook.hpp
     ${RENDERWELL_SOURCE_DIR}/List.hpp
     ${RENDERWELL_SOURCE_DIR}/ListManager.hpp
+    ${RENDERWELL_SOURCE_DIR}/DataObject.hpp
     ${RENDERWELL_SOURCE_DIR}/Renderer.hpp
     ${RENDERWELL_SOURCE_DIR}/Settings.hpp
     ${RENDERWELL_SOURCE_DIR}/Sorter.hpp
@@ -76,6 +79,7 @@ set(RENDERWELL_HEADERS
 
 set(RENDERWELL_SRCS
     ${RENDERWELL_SOURCE_DIR}/BackendManager.cpp
+    ${RENDERWELL_SOURCE_DIR}/DataBase.cpp
     # ${RENDERWELL_SOURCE_DIR}/EBook.cpp
     # ${RENDERWELL_SOURCE_DIR}/List.cpp
     ${RENDERWELL_SOURCE_DIR}/ListManager.cpp

@@ -1,3 +1,5 @@
+#pragma once
+
 namespace RenderWell
 {
 template<bool UseAtoZ, bool UseZtoA, bool UseRecent, bool UseFavorites>
@@ -7,7 +9,7 @@ struct Sort
     static inline constexpr bool UsingZtoA = UseZtoA;
     static inline constexpr bool UsingRecent = UseRecent;
     static inline constexpr bool UsingFavorites = UseFavorites;
-}
+};
 
 using SortAtoZ = Sort<true, false, false, false>;
 using SortZtoA = Sort<false, true, false, false>;

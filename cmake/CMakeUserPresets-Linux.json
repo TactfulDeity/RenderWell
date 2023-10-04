@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "version": 2,
     "cmakeMinimumRequired": {
         "major": 3,
         "minor": 27,
@@ -45,7 +45,7 @@
             "name": "linux-x64-asan",
             "inherits" :"default-config",
             "displayName": "Linux-ASAN(x64)",
-            "description": "Default Configuration for Linux Address Sanatizer on x64",
+            "description": "Default Configuration for Linux Address Sanitizer on x64",
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/../RenderWell-Build/RenderWell-ASAN-x64",
             "hidden": false,
