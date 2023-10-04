@@ -1,0 +1,107 @@
+{
+    "version": 2,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 27,
+        "patch": 6
+    },
+    "configurePresets": [
+        {
+            "name": "default-configuration",
+            "displayName": "default-config",
+            "description": "Default Configuration for Linux Systems",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/../RenderWell-Build/default-build",
+            "hidden": true,
+            "cacheVariables": {
+
+            }
+        },
+        {
+            "name": "linux-x64-debug",
+            "inherits" :"default-config",
+            "displayName": "Linux-Debug(x64)",
+            "description": "Default Configuration for Linux Debugging on x64",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/../RenderWell-Build/RenderWell-Debug-x64",
+            "hidden": false,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "linux-x64-release",
+            "inherits" :"default-config",
+            "displayName": "Linux-Release(x64)",
+            "description": "Default Configuration for Linux Release on x64",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/../RenderWell-Build/RenderWell-Release-x64",
+            "hidden": false,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "linux-x64-asan",
+            "inherits" :"default-config",
+            "displayName": "Linux-ASAN(x64)",
+            "description": "Default Configuration for Linux Address Sanitizer on x64",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/../RenderWell-Build/RenderWell-ASAN-x64",
+            "hidden": false,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_FLAGS": {
+                    "type": "STRING",
+                    "value" : "-O1 -fsanitize=address -fno-omit-frame-pointer"
+                }
+            }
+        },
+        {
+            "name": "linux-x64-optimized",
+            "inherits" :"default-config",
+            "displayName": "Linux-Optimized(x64)",
+            "description": "Default Configuration for Linux -O3 Build on x64",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/../RenderWell-Build/RenderWell-Optimized-x64",
+            "hidden": false,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_FLAGS": {
+                    "type": "STRING",
+                    "value" : "-O3"
+                }
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "Debug-x64",
+            "displayName": "Debug-x64",
+            "description": "Default Configuration for Linux Debugging on x64",
+            "configurePreset": "linux-x64-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "Release-x64",
+            "displayName": "Release-x64",
+            "description": "Default Configuration for Linux Release on x64",
+            "configurePreset": "linux-x64-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "ASAN-x64",
+            "displayName": "ASAN-x64",
+            "description": "Default Configuration for Linux Address Sanitizer on x64",
+            "configurePreset": "linux-x64-asan",
+            "configuration": "Debug"
+        },
+        {
+            "name": "Optimized-x64",
+            "displayName": "Optimized-x64",
+            "description": "Default Configuration for -O3 on x64",
+            "configurePreset": "linux-x64-optimized",
+            "configuration": "Release"
+        }
+    ]
+} 
