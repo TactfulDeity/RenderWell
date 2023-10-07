@@ -1,6 +1,8 @@
 #pragma once
 
-#include "DataBase.hpp"
+#include "RenderWell/render_well_export.hpp"
+
+#include "RenderWell/DataBase.hpp"
 
 namespace RenderWell
 {
@@ -84,6 +86,6 @@ namespace RenderWell
         }
 
     private:
-    DataBase m_DataBase;
+    z m_DataBase;
     };
 }

@@ -7,8 +7,9 @@ project(RenderWell
   LANGUAGES CXX
 )
 
-set(RENDERWELL_BIN_DIR ${PROJECT_BINARY_DIR}/bin)
-set(RENDERWELL_GENERATED_HEADER_DIR ${PROJECT_BINARY_DIR}/generated)
+set(RENDERWELL_BIN_DIR ${RenderWell_BINARY_DIR}/bin)
+set(RENDERWELL_GENERATED_DIR ${RenderWell_BINARY_DIR}/generated)
+set(RENDERWELL_GENERATED_HEADER_DIR ${RenderWell_BINARY_DIR}/generated/RenderWell)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -64,6 +65,10 @@ generate_export_header(RenderWell
 
 set(RENDERWELL_SOURCE_DIR ${RenderWell_SOURCE_DIR}/src/RenderWell)
 
+set(RENDERWELL_GENERATED_HEADERS
+    ${RENDERWELL_GENERATED_HEADER_DIR}/render_well_export.hpp
+)
+
 set(RENDERWELL_HEADERS
     ${RENDERWELL_SOURCE_DIR}/BackendManager.hpp
     ${RENDERWELL_SOURCE_DIR}/DataBase.hpp
@@ -80,8 +85,6 @@ set(RENDERWELL_HEADERS
 set(RENDERWELL_SRCS
     ${RENDERWELL_SOURCE_DIR}/BackendManager.cpp
     ${RENDERWELL_SOURCE_DIR}/DataBase.cpp
-    # ${RENDERWELL_SOURCE_DIR}/EBook.cpp
-    # ${RENDERWELL_SOURCE_DIR}/List.cpp
     ${RENDERWELL_SOURCE_DIR}/ListManager.cpp
     ${RENDERWELL_SOURCE_DIR}/Renderer.cpp
     ${RENDERWELL_SOURCE_DIR}/Settings.cpp
@@ -89,15 +92,16 @@ set(RENDERWELL_SRCS
 
 target_sources(RenderWell
         PRIVATE
+        ${RENDERWELL_GENERATED_HEADERS}
         ${RENDERWELL_HEADERS}
         ${RENDERWELL_SRCS}
 )
 
-source_group(TREE ${RENDERWELL_SOURCE_DIR} PREFIX "complex" FILES ${RENDERWELL_HDRS})
-source_group(TREE ${RENDERWELL_GENERATED_HEADER_DIR} PREFIX "complex/generated" FILES ${RENDERWELL_GENERATED_HEADERS})
-source_group(TREE ${RENDERWELL_SOURCE_DIR} PREFIX "complex" FILES ${RENDERWELL_SRCS})
+source_group(TREE ${RENDERWELL_SOURCE_DIR} PREFIX "RenderWell" FILES ${RENDERWELL_HDRS})
+source_group(TREE ${RENDERWELL_GENERATED_HEADER_DIR} PREFIX "RenderWell/generated" FILES ${RENDERWELL_GENERATED_HEADERS})
+source_group(TREE ${RENDERWELL_SOURCE_DIR} PREFIX "RenderWell" FILES ${RENDERWELL_SRCS})
 
-set(RENDERWELL_INCLUDE_DIR ${complex_SOURCE_DIR}/src)
+set(RENDERWELL_INCLUDE_DIR ${RenderWell_SOURCE_DIR}/src)
 
 target_include_directories(RenderWell
         PUBLIC
@@ -106,7 +110,20 @@ target_include_directories(RenderWell
         $<INSTALL_INTERFACE:include>
 )
 
+# ------------------------------------------------------------------------------
+# CLI Executable
+# ------------------------------------------------------------------------------
+#add_subdirectory(${RenderWell_SOURCE_DIR}/src/Sweep)
+
+# ------------------------------------------------------------------------------
+# Testing
+# ------------------------------------------------------------------------------
 #if(RENDERWELL_BUILD_TESTS)
 #    include(CTest)
 #    add_subdirectory(test)
 #endif()
+
+# ------------------------------------------------------------------------------
+# Packaging
+# ------------------------------------------------------------------------------
+set(RENDERWELL_PACKAGE_NAMESPACE "RenderWell::")

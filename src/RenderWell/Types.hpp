@@ -1,7 +1,11 @@
 #pragma once
 
+#include <chrono>
+
 namespace RenderWell
 {
+using AccessTime = std::chrono::steady_clock::time_point;
+
 template<bool UseAtoZ, bool UseZtoA, bool UseRecent, bool UseFavorites>
 struct Sort
 {
