@@ -39,6 +39,7 @@ public:
   std::vector<unsigned long> search(const std::string& key);
   fs::path renderPages(unsigned long bookId, int pageStart = -1, int renderCount = 30);
   void deleteListWrapper(unsigned long listId);
+  void createListWrapper(std::string&& name, std::vector<unsigned long>&& books = {});
 
   //-----------------------------------------------------------
   // Getters and Setters

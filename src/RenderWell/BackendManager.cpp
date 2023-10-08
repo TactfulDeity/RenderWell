@@ -125,6 +125,11 @@ void BackendManager::deleteListWrapper(unsigned long listId)
   m_DataBase.deleteList(listId);
 }
 
+void BackendManager::createListWrapper(std::string &&name, std::vector<unsigned long> &&books)
+{
+  m_DataBase.createList(std::forward<std::string>(name), std::forward<std::vector<unsigned long>>(books));
+}
+
 //-----------------------------------------------------------
 // Getters and Setters
 //-----------------------------------------------------------
