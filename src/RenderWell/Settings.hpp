@@ -25,6 +25,8 @@ public:
   
   [[nodiscard]] std::string getValue(const std::string& key) const;
 
+  bool writeSettingsToDisk();
+
   static void clearTempDirectory();
 
 private:

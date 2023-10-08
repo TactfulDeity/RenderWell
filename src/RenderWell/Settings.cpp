@@ -30,6 +30,12 @@ bool Settings::updateSetting(const std::string& key, const std::string& updateVa
   m_Json[key] = updateValue;
 
   // write the update value to the corresponding slot in the settings.json file
+  return writeSettingsToDisk();
+}
+
+bool Settings::writeSettingsToDisk()
+{
+  // write the update value to the corresponding slot in the settings.json file
   std::ofstream fout(m_Location, std::ios_base::out | std::ios_base::binary);
   if(!fout.is_open())
   {

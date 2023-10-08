@@ -8,6 +8,7 @@
 #include "RenderWell/json.hpp"
 #include <poppler/cpp/poppler-document.h>
 
+#include <algorithm>
 #include <fstream>
 
 using namespace RenderWell;
@@ -15,6 +16,7 @@ using namespace RenderWell;
 namespace
 {
 const std::string k_ListsFileName = "lists.json";
+inline constexpr std::string_view k_FavoritesName = "Favorites";
 }
 
 //-----------------------------------------------------------
@@ -23,7 +25,7 @@ const std::string k_ListsFileName = "lists.json";
 DataBase::DataBase(const fs::path& inputDirectory)
 : m_Objects({})
 {
-  createList("Favorites");
+  createList(std::string(k_FavoritesName));
 
   // Read in book files
   loadBooks(inputDirectory);
@@ -198,7 +200,36 @@ void DataBase::loadBooks(const fs::path& inputDirectory)
     }
 }
 
-void loadLists()
+void DataBase::loadLists()
 {
+    using json = nlohmann::json;
+    json listsCache = {};
 
+    std::ifstream fin(k_DataFilesDir.string() + ::k_ListsFileName, std::ios_base::in | std::ios_base::binary);
+    fin >> listsCache;
+    for(auto& [key, value] : listsCache.items())
+    {
+      std::vector<unsigned long> foundBookIds = {};
+      for(auto iter = value.begin(); iter != value.end(); iter++)
+      {
+        for(auto id : m_BookIds)
+        {
+          if(iter.value() == getDataObjectAs<EBook>(id)->m_Location.string())
+          {
+            foundBookIds.push_back(getDataObject(id)->m_UUID);
+            break;
+          }
+        }
+      }
+
+      if(key == k_FavoritesName)
+      {
+        getDataObjectAs<List>(k_FavoritesId)->m_Ebooks = foundBookIds;
+      }
+      else
+      {
+        std::string name = key;
+        createList(std::move(name), std::move(foundBookIds));
+      }
+    }
 }

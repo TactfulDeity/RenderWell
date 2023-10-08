@@ -140,5 +140,7 @@ DataBase& BackendManager::getDataBaseRef()
 
 void BackendManager::writeOut()
 {
-  // write state (all member variables to disk)
+  // write state (all lists to disk)
+    m_DataBase.writeListsToDisk();
+    m_Settings.writeSettingsToDisk();
 }
