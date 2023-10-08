@@ -7,6 +7,6 @@
 namespace RenderWell {
 struct List : DataObject
 {
-    std::vector<unsigned long> m_Ebooks;
+  std::vector<unsigned long> m_Ebooks;
 };
 }

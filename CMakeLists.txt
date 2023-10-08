@@ -10,6 +10,8 @@ project(RenderWell
 set(RENDERWELL_BIN_DIR ${RenderWell_BINARY_DIR}/bin)
 set(RENDERWELL_GENERATED_DIR ${RenderWell_BINARY_DIR}/generated)
 set(RENDERWELL_GENERATED_HEADER_DIR ${RenderWell_BINARY_DIR}/generated/RenderWell)
+set(RENDERWELL_DATA_DIR ${RenderWell_BINARY_DIR}/data)
+set(RENDERWELL_TEMP_DIR ${RenderWell_BINARY_DIR}/data/temp)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -20,7 +22,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # -----------------------------------------------------------------------
 # Find dependent libraries
 # -----------------------------------------------------------------------
-# find_package(fmt CONFIG REQUIRED)
+find_library(poppler poppler-cpp)
 
 add_library(RenderWell SHARED)
 add_library(RenderWell::RenderWell ALIAS RenderWell)
@@ -44,9 +46,7 @@ if(UNIX)
   )
 endif()
 
-target_link_libraries(RenderWell
-  PUBLIC
-)
+target_link_libraries(RenderWell PUBLIC "${poppler}")
 
 option(RENDERWELL_ENABLE_LINK_FILESYSTEM "Enables linking to a C++ filesystem library" OFF)
 if(RENDERWELL_ENABLE_LINK_FILESYSTEM)
@@ -89,6 +89,8 @@ set(RENDERWELL_SRCS
     ${RENDERWELL_SOURCE_DIR}/Renderer.cpp
     ${RENDERWELL_SOURCE_DIR}/Settings.cpp
 )
+
+configure_file(${RenderWell_SOURCE_DIR}/cmake/render_well_directories.hpp.in ${RENDERWELL_GENERATED_HEADER_DIR}/render_well_directories.hpp)
 
 target_sources(RenderWell
         PRIVATE

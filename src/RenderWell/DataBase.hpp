@@ -2,11 +2,14 @@
 
 #include "RenderWell/DataObject.hpp"
 
+#include <filesystem>
 #include <map>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
+
+namespace fs = std::filesystem;
 
 namespace RenderWell
 {
@@ -21,7 +24,7 @@ public:
   //-----------------------------------------------------------
   // Object Modifiers
   //-----------------------------------------------------------
-  DataBase();
+  explicit DataBase(const fs::path& inputDirectory);
   ~DataBase() noexcept = default;
 
   DataBase(const DataBase& obj) = default;
@@ -35,6 +38,7 @@ public:
   //-----------------------------------------------------------
   bool createList(std::string&& name, std::vector<unsigned long>&& books = {});
 
+
   //-----------------------------------------------------------
   // Getters and Setters
   //-----------------------------------------------------------
@@ -42,33 +46,33 @@ public:
   [[nodiscard]] const std::vector<unsigned long>& getListIds() const;
   [[nodiscard]] const std::vector<unsigned long>& getBookIds() const;
 
-  [[nodiscard]] const DataObject* getDataObject(unsigned long index);
-  [[nodiscard]] const DataObject& getDataObjectRef(unsigned long index);
+  [[nodiscard]] DataObject* getDataObject(unsigned long index);
+  [[nodiscard]] DataObject& getDataObjectRef(unsigned long index);
   [[nodiscard]] const DataObject* getDataObject(unsigned long index) const;
   [[nodiscard]] const DataObject& getDataObjectRef(unsigned long index) const;
 
   template <class T, class = std::enable_if_t<std::is_base_of_v<DataObject, T>>>
   T* getDataObjectAs(unsigned long index)
   {
-    return dynamic_cast<T*>(getDataObject(index));
+    return static_cast<T*>(getDataObject(index));
   }
 
   template <class T, class = std::enable_if_t<std::is_base_of_v<DataObject, T>>>
   T& getDataObjectRefAs(unsigned long index)
   {
-    return dynamic_cast<T&>(getDataObjectRef(index));
+    return static_cast<T&>(getDataObjectRef(index));
   }
 
   template <class T, class = std::enable_if_t<std::is_base_of_v<DataObject, T>>>
   const T* getDataObjectAs(unsigned long index) const
   {
-    return dynamic_cast<const T*>(getDataObject(index));
+    return static_cast<const T*>(getDataObject(index));
   }
 
   template <class T, class = std::enable_if_t<std::is_base_of_v<DataObject, T>>>
   const T& getDataObjectRefAs(unsigned long index) const
   {
-    return dynamic_cast<const T&>(getDataObjectRef(index));
+    return static_cast<const T&>(getDataObjectRef(index));
   }
 
   //-----------------------------------------------------------
@@ -84,5 +88,6 @@ private:
   // Private Member Functions
   //-----------------------------------------------------------
   bool insert(const std::shared_ptr<DataObject>& object);
+  void loadBooks(const fs::path& inputDirectory);
 };
 }

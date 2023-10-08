@@ -6,7 +6,9 @@ namespace RenderWell
 {
 struct DataObject
 {
-    unsigned long m_UUID;
-    std::string m_Name;
+  DataObject() = default;
+  virtual ~DataObject() = default;
+  unsigned long m_UUID;
+  std::string m_Name;
 };
 }

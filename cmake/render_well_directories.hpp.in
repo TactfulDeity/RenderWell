@@ -1,0 +1,11 @@
+#pragma once
+
+#include <filesystem>
+
+namespace fs = std::filesystem;
+
+namespace RenderWell
+{
+inline static const fs::path k_DataDir = fs::path("@RENDERWELL_DATA_DIR@");
+inline static const fs::path k_TempFileDir = fs::path("@RENDERWELL_TEMP_DIR@");
+} // namespace complex 
