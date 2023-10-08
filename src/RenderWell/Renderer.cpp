@@ -33,7 +33,7 @@ Renderer::~Renderer()
   delete m_Document;
 }
 
-fs::path Renderer::renderPage(int pageNum)
+void Renderer::renderPage(int pageNum)
 {
   poppler::page_renderer renderer = poppler::page_renderer();
 
@@ -55,7 +55,7 @@ fs::path Renderer::renderPage(int pageNum)
     throw std::runtime_error("Rendering failed");
   }
 
-  if(!img.save(k_TempFileDir.string() + "/" + std::to_string(pageNum) + ".png", "png")) {
+  if(!img.save(k_TempFilesDir.string() + "/" + std::to_string(pageNum) + ".png", "png")) {
     throw std::runtime_error("Saving to file failed");
   }
 }

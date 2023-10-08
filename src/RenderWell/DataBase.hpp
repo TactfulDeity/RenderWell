@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RenderWell/render_well_export.hpp"
 #include "RenderWell/DataObject.hpp"
 
 #include <filesystem>
@@ -13,7 +14,7 @@ namespace fs = std::filesystem;
 
 namespace RenderWell
 {
-class DataBase
+class RENDERWELL_EXPORT DataBase
 {
   //-----------------------------------------------------------
   // static Member Constants
@@ -24,7 +25,7 @@ public:
   //-----------------------------------------------------------
   // Object Modifiers
   //-----------------------------------------------------------
-  explicit DataBase(const fs::path& inputDirectory);
+  explicit DataBase(const fs::path& inputDirectory = {});
   ~DataBase() noexcept = default;
 
   DataBase(const DataBase& obj) = default;

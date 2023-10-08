@@ -12,6 +12,7 @@ set(RENDERWELL_GENERATED_DIR ${RenderWell_BINARY_DIR}/generated)
 set(RENDERWELL_GENERATED_HEADER_DIR ${RenderWell_BINARY_DIR}/generated/RenderWell)
 set(RENDERWELL_DATA_DIR ${RenderWell_BINARY_DIR}/data)
 set(RENDERWELL_TEMP_DIR ${RenderWell_BINARY_DIR}/data/temp)
+set(RENDERWELL_SYS_DATA_DIR ${RenderWell_BINARY_DIR}/data/system)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -73,6 +74,7 @@ set(RENDERWELL_HEADERS
     ${RENDERWELL_SOURCE_DIR}/BackendManager.hpp
     ${RENDERWELL_SOURCE_DIR}/DataBase.hpp
     ${RENDERWELL_SOURCE_DIR}/EBook.hpp
+    ${RENDERWELL_SOURCE_DIR}/json.hpp
     ${RENDERWELL_SOURCE_DIR}/List.hpp
     ${RENDERWELL_SOURCE_DIR}/ListManager.hpp
     ${RENDERWELL_SOURCE_DIR}/DataObject.hpp

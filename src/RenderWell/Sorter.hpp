@@ -54,7 +54,7 @@ public:
       {
         // Load strings from the DataBase into an ordered map to utilize BST
         std::vector<unsigned long> bookIds = m_DataBase.getBookIds();
-        std::map<AccessTime, unsigned long> orderedList = {};
+        std::map<std::string, unsigned long> orderedList = {};
         for (auto index : bookIds) {
           orderedList.emplace(
               // Avoid dynamic cast since all DataObjects have a Name

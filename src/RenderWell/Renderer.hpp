@@ -25,7 +25,7 @@ public:
     Renderer& operator=(const Renderer& obj) = delete;
     Renderer& operator=(Renderer&& obj) = delete;
 
-    fs::path renderPage(int pageNum);
+    void renderPage(int pageNum);
 
     [[nodiscard]] int getMaxPage() const;
 
