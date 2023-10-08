@@ -7,6 +7,7 @@
 #include "RenderWell/Sorter.hpp"
 #include "RenderWell/Types.hpp"
 
+#include <algorithm>
 #include <stdexcept>
 
 using namespace RenderWell;
@@ -108,6 +109,20 @@ std::vector<unsigned long> BackendManager::search(const std::string& key)
   }
   foundIds.shrink_to_fit();
   return foundIds;
+}
+
+void BackendManager::deleteListWrapper(unsigned long listId)
+{
+  // Assumes object is a list and has already been cleared from EBooks
+  std::vector<unsigned long> listIds = m_DataBase.getListIds();
+  if(std::find(listIds.begin(), listIds.end(), listId) != listIds.end())
+  {
+    throw std::runtime_error("Index is not a List");
+  }
+
+  ListManager(m_DataBase).removeListFromAll(listId);
+
+  m_DataBase.deleteList(listId);
 }
 
 //-----------------------------------------------------------

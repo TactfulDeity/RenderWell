@@ -23,6 +23,7 @@ public:
   void rename(unsigned long id, const std::string& name);
   void add(unsigned long listId, unsigned long ebookId);
   void remove(unsigned long listId, unsigned long ebookId);
+  void removeListFromAll(unsigned long listId);
 
 private:
   DataBase& m_DataBase;

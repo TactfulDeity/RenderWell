@@ -58,3 +58,23 @@ void ListManager::remove(unsigned long listId, unsigned long ebookId)
     list.m_Ebooks = temp;
   }
 }
+
+void ListManager::removeListFromAll(unsigned long listId)
+{
+  const std::vector<unsigned long>& bookList = m_DataBase.getDataObjectAs<List>(listId)->m_Ebooks;
+
+  for(auto id : bookList)
+  {
+    auto &book = m_DataBase.getDataObjectRefAs<EBook>(id);
+
+    std::vector<unsigned long> temp = {};
+    temp.reserve(book.m_Lists.size());
+    for (auto index : book.m_Lists) {
+      if (index == listId) {
+        continue;
+      }
+      temp.push_back(index);
+    }
+    book.m_Lists = temp;
+  }
+}
