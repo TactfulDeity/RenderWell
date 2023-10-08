@@ -51,3 +51,8 @@ std::string Settings::getValue(const std::string& key) const
 
   return iter.value();
 }
+
+void Settings::clearTempDirectory()
+{
+  fs::remove_all(k_TempFilesDir);
+}

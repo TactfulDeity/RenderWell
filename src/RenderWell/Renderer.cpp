@@ -38,7 +38,7 @@ void Renderer::renderPage(int pageNum)
   poppler::page_renderer renderer = poppler::page_renderer();
 
   if(pageNum < 0 || pageNum >= m_Document->pages()) {
-    throw std::runtime_error("Page is out of bounds");
+    return;
   }
 
   poppler::page* page =m_Document->create_page(pageNum);

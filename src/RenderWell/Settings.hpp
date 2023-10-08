@@ -25,6 +25,8 @@ public:
   
   [[nodiscard]] std::string getValue(const std::string& key) const;
 
+  static void clearTempDirectory();
+
 private:
   std::filesystem::path m_Location;
   json m_Json;

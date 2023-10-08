@@ -1,6 +1,9 @@
 #include "BackendManager.hpp"
 
+#include "RenderWell/render_well_directories.hpp"
+
 #include "RenderWell/ListManager.hpp"
+#include "RenderWell/Renderer.hpp"
 #include "RenderWell/Sorter.hpp"
 #include "RenderWell/Types.hpp"
 
@@ -17,6 +20,7 @@ BackendManager::BackendManager()
 BackendManager::~BackendManager() noexcept
 {
   writeOut();
+  RenderWell::Settings::clearTempDirectory();
 }
 
 void BackendManager::removeWrapper(unsigned long listId, unsigned long bookId)
@@ -40,11 +44,6 @@ void BackendManager::renameWrapper(unsigned long index, const std::string& name)
 void BackendManager::updateSettingWrapper(const std::string& key, const std::string& value)
 {
   // Wrapper function for creating temp ListManager to add ebook to list
-}
-
-void BackendManager::reload()
-{
-  // add ebook the member variable m_EBooks
 }
 
 std::vector<unsigned long> BackendManager::sort(unsigned char sortKey)
@@ -75,6 +74,24 @@ std::vector<unsigned long> BackendManager::sort(unsigned char sortKey)
   }
 }
 
+fs::path BackendManager::renderPages(unsigned long bookId, int pageStart, int renderCount)
+{
+  RenderWell::Settings::clearTempDirectory();
+  int start = pageStart;
+  if(pageStart == -1)
+  {
+    start = m_DataBase.getDataObjectAs<EBook>(bookId)->m_PageNumber;
+  }
+
+  Renderer bookRenderer = Renderer(m_DataBase, bookId);
+  for(int i = start; i < renderCount; i++)
+  {
+    bookRenderer.renderPage(i);
+  }
+
+  return k_TempFilesDir;
+}
+
 std::vector<unsigned long> BackendManager::search(const std::string& key)
 {
   // searches m_EBooks for a matching title and returns uuid of EBook object
@@ -96,4 +113,8 @@ std::vector<unsigned long> BackendManager::search(const std::string& key)
 void BackendManager::writeOut()
 {
   // write state (all member variables to disk)
+}
+
+void BackendManager::reload()
+{
 }
