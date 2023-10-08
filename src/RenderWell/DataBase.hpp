@@ -38,6 +38,8 @@ public:
   // Member Functions
   //-----------------------------------------------------------
   bool createList(std::string&& name, std::vector<unsigned long>&& books = {});
+  bool deleteList(unsigned long listId);
+  void writeListsToDisk();
 
 
   //-----------------------------------------------------------
@@ -90,5 +92,6 @@ private:
   //-----------------------------------------------------------
   bool insert(const std::shared_ptr<DataObject>& object);
   void loadBooks(const fs::path& inputDirectory);
+  void loadLists();
 };
 }

@@ -110,11 +110,15 @@ std::vector<unsigned long> BackendManager::search(const std::string& key)
   return foundIds;
 }
 
+//-----------------------------------------------------------
+// Getters and Setters
+//-----------------------------------------------------------
+DataBase& BackendManager::getDataBaseRef()
+{
+    return m_DataBase;
+}
+
 void BackendManager::writeOut()
 {
   // write state (all member variables to disk)
-}
-
-void BackendManager::reload()
-{
 }

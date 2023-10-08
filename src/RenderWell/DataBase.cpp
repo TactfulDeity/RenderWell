@@ -1,11 +1,21 @@
 #include "DataBase.hpp"
 
+#include "RenderWell/render_well_directories.hpp"
+
 #include "RenderWell/EBook.hpp"
 #include "RenderWell/List.hpp"
 
+#include "RenderWell/json.hpp"
 #include <poppler/cpp/poppler-document.h>
 
+#include <fstream>
+
 using namespace RenderWell;
+
+namespace
+{
+const std::string k_ListsFileName = "lists.json";
+}
 
 //-----------------------------------------------------------
 // Object Modifiers
@@ -17,6 +27,9 @@ DataBase::DataBase(const fs::path& inputDirectory)
 
   // Read in book files
   loadBooks(inputDirectory);
+
+  // Load Lists
+  loadLists();
 }
 
 //-----------------------------------------------------------
@@ -33,6 +46,46 @@ bool DataBase::createList(std::string&& name, std::vector<unsigned long>&& books
     }
     m_ListIds.push_back(m_NextUUID - 1);
     return true;
+}
+
+bool DataBase::deleteList(unsigned long listId)
+{
+    // Assumes object is a list and has already been cleared from EBooks
+    std::vector<unsigned long> temp = {};
+    temp.reserve(m_ListIds.size());
+    for (auto index : m_ListIds) {
+      if (index == listId) {
+        continue;
+      }
+      temp.push_back(index);
+    }
+    m_ListIds = temp;
+
+    m_Objects.erase(listId);
+    writeListsToDisk();
+    return true;
+}
+
+void DataBase::writeListsToDisk()
+{
+    using json = nlohmann::json;
+    json listsCache = {};
+    for(auto listId : m_ListIds)
+    {
+      auto& list = getDataObjectRefAs<List>(listId);
+
+      std::vector<std::string> paths = {};
+      paths.reserve(list.m_Ebooks.size());
+      for(auto bookId : list.m_Ebooks)
+      {
+        paths.push_back(getDataObjectAs<EBook>(bookId)->m_Location.string());
+      }
+
+      listsCache[list.m_Name] = paths;
+    }
+
+    std::ofstream fout(k_DataFilesDir.string() + ::k_ListsFileName, std::ios_base::out | std::ios_base::binary);
+    fout << listsCache;
 }
 
 //-----------------------------------------------------------
@@ -143,4 +196,9 @@ void DataBase::loadBooks(const fs::path& inputDirectory)
         }
       }
     }
+}
+
+void loadLists()
+{
+
 }

@@ -40,6 +40,11 @@ public:
   fs::path renderPages(unsigned long bookId, int pageStart = -1, int renderCount = 30);
 
   //-----------------------------------------------------------
+  // Getters and Setters
+  //-----------------------------------------------------------
+  DataBase& getDataBaseRef();
+
+  //-----------------------------------------------------------
   // Private Member Variables
   //-----------------------------------------------------------
 private:
@@ -50,6 +55,5 @@ private:
   // Private Member Functions
   //-----------------------------------------------------------
   void writeOut();
-  void reload();
 };
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RenderWell/render_well_export.hpp"
+
 #include "RenderWell/DataObject.hpp"
 #include "RenderWell/Types.hpp"
 
@@ -11,7 +13,7 @@
 namespace fs = std::filesystem;
 
 namespace RenderWell {
-struct EBook : DataObject
+struct RENDERWELL_EXPORT EBook : DataObject
 {
   std::string m_Author;
   std::vector<unsigned long> m_Lists;
