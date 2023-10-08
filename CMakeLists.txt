@@ -7,8 +7,12 @@ project(RenderWell
   LANGUAGES CXX
 )
 
-set(RENDERWELL_BIN_DIR ${PROJECT_BINARY_DIR}/bin)
-set(RENDERWELL_GENERATED_HEADER_DIR ${PROJECT_BINARY_DIR}/generated)
+set(RENDERWELL_BIN_DIR ${RenderWell_BINARY_DIR}/bin)
+set(RENDERWELL_GENERATED_DIR ${RenderWell_BINARY_DIR}/generated)
+set(RENDERWELL_GENERATED_HEADER_DIR ${RenderWell_BINARY_DIR}/generated/RenderWell)
+set(RENDERWELL_DATA_DIR ${RenderWell_BINARY_DIR}/data)
+set(RENDERWELL_TEMP_DIR ${RenderWell_BINARY_DIR}/data/temp)
+set(RENDERWELL_SYS_DATA_DIR ${RenderWell_BINARY_DIR}/data/system)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -19,7 +23,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # -----------------------------------------------------------------------
 # Find dependent libraries
 # -----------------------------------------------------------------------
-# find_package(fmt CONFIG REQUIRED)
+find_library(poppler poppler-cpp)
 
 add_library(RenderWell SHARED)
 add_library(RenderWell::RenderWell ALIAS RenderWell)
@@ -43,9 +47,7 @@ if(UNIX)
   )
 endif()
 
-target_link_libraries(RenderWell
-  PUBLIC
-)
+target_link_libraries(RenderWell PUBLIC "${poppler}")
 
 option(RENDERWELL_ENABLE_LINK_FILESYSTEM "Enables linking to a C++ filesystem library" OFF)
 if(RENDERWELL_ENABLE_LINK_FILESYSTEM)
@@ -64,10 +66,15 @@ generate_export_header(RenderWell
 
 set(RENDERWELL_SOURCE_DIR ${RenderWell_SOURCE_DIR}/src/RenderWell)
 
+set(RENDERWELL_GENERATED_HEADERS
+    ${RENDERWELL_GENERATED_HEADER_DIR}/render_well_export.hpp
+)
+
 set(RENDERWELL_HEADERS
     ${RENDERWELL_SOURCE_DIR}/BackendManager.hpp
     ${RENDERWELL_SOURCE_DIR}/DataBase.hpp
     ${RENDERWELL_SOURCE_DIR}/EBook.hpp
+    ${RENDERWELL_SOURCE_DIR}/json.hpp
     ${RENDERWELL_SOURCE_DIR}/List.hpp
     ${RENDERWELL_SOURCE_DIR}/ListManager.hpp
     ${RENDERWELL_SOURCE_DIR}/DataObject.hpp
@@ -80,24 +87,25 @@ set(RENDERWELL_HEADERS
 set(RENDERWELL_SRCS
     ${RENDERWELL_SOURCE_DIR}/BackendManager.cpp
     ${RENDERWELL_SOURCE_DIR}/DataBase.cpp
-    # ${RENDERWELL_SOURCE_DIR}/EBook.cpp
-    # ${RENDERWELL_SOURCE_DIR}/List.cpp
     ${RENDERWELL_SOURCE_DIR}/ListManager.cpp
     ${RENDERWELL_SOURCE_DIR}/Renderer.cpp
     ${RENDERWELL_SOURCE_DIR}/Settings.cpp
 )
 
+configure_file(${RenderWell_SOURCE_DIR}/cmake/render_well_directories.hpp.in ${RENDERWELL_GENERATED_HEADER_DIR}/render_well_directories.hpp)
+
 target_sources(RenderWell
         PRIVATE
+        ${RENDERWELL_GENERATED_HEADERS}
         ${RENDERWELL_HEADERS}
         ${RENDERWELL_SRCS}
 )
 
-source_group(TREE ${RENDERWELL_SOURCE_DIR} PREFIX "complex" FILES ${RENDERWELL_HDRS})
-source_group(TREE ${RENDERWELL_GENERATED_HEADER_DIR} PREFIX "complex/generated" FILES ${RENDERWELL_GENERATED_HEADERS})
-source_group(TREE ${RENDERWELL_SOURCE_DIR} PREFIX "complex" FILES ${RENDERWELL_SRCS})
+source_group(TREE ${RENDERWELL_SOURCE_DIR} PREFIX "RenderWell" FILES ${RENDERWELL_HDRS})
+source_group(TREE ${RENDERWELL_GENERATED_HEADER_DIR} PREFIX "RenderWell/generated" FILES ${RENDERWELL_GENERATED_HEADERS})
+source_group(TREE ${RENDERWELL_SOURCE_DIR} PREFIX "RenderWell" FILES ${RENDERWELL_SRCS})
 
-set(RENDERWELL_INCLUDE_DIR ${complex_SOURCE_DIR}/src)
+set(RENDERWELL_INCLUDE_DIR ${RenderWell_SOURCE_DIR}/src)
 
 target_include_directories(RenderWell
         PUBLIC
@@ -106,7 +114,20 @@ target_include_directories(RenderWell
         $<INSTALL_INTERFACE:include>
 )
 
+# ------------------------------------------------------------------------------
+# CLI Executable
+# ------------------------------------------------------------------------------
+#add_subdirectory(${RenderWell_SOURCE_DIR}/src/Sweep)
+
+# ------------------------------------------------------------------------------
+# Testing
+# ------------------------------------------------------------------------------
 #if(RENDERWELL_BUILD_TESTS)
 #    include(CTest)
 #    add_subdirectory(test)
 #endif()
+
+# ------------------------------------------------------------------------------
+# Packaging
+# ------------------------------------------------------------------------------
+set(RENDERWELL_PACKAGE_NAMESPACE "RenderWell::")

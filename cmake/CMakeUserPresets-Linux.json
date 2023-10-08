@@ -1,5 +1,5 @@
 {
-    "version": 2,
+    "version": 3,
     "cmakeMinimumRequired": {
         "major": 3,
         "minor": 27,
@@ -12,14 +12,11 @@
             "description": "Default Configuration for Linux Systems",
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/../RenderWell-Build/default-build",
-            "hidden": true,
-            "cacheVariables": {
-
-            }
+            "hidden": true
         },
         {
             "name": "linux-x64-debug",
-            "inherits" :"default-config",
+            "inherits" :"default-configuration",
             "displayName": "Linux-Debug(x64)",
             "description": "Default Configuration for Linux Debugging on x64",
             "generator": "Ninja",
@@ -31,7 +28,7 @@
         },
         {
             "name": "linux-x64-release",
-            "inherits" :"default-config",
+            "inherits" :"default-configuration",
             "displayName": "Linux-Release(x64)",
             "description": "Default Configuration for Linux Release on x64",
             "generator": "Ninja",
@@ -43,7 +40,7 @@
         },
         {
             "name": "linux-x64-asan",
-            "inherits" :"default-config",
+            "inherits" :"default-configuration",
             "displayName": "Linux-ASAN(x64)",
             "description": "Default Configuration for Linux Address Sanitizer on x64",
             "generator": "Ninja",
@@ -51,15 +48,12 @@
             "hidden": false,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_CXX_FLAGS": {
-                    "type": "STRING",
-                    "value" : "-O1 -fsanitize=address -fno-omit-frame-pointer"
-                }
+                "CMAKE_CXX_FLAGS": "-O1 -fsanitize=address -fno-omit-frame-pointer"
             }
         },
         {
             "name": "linux-x64-optimized",
-            "inherits" :"default-config",
+            "inherits" :"default-configuration",
             "displayName": "Linux-Optimized(x64)",
             "description": "Default Configuration for Linux -O3 Build on x64",
             "generator": "Ninja",
@@ -67,10 +61,7 @@
             "hidden": false,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_CXX_FLAGS": {
-                    "type": "STRING",
-                    "value" : "-O3"
-                }
+                "CMAKE_CXX_FLAGS": "-O3"
             }
         }
     ],
@@ -104,4 +95,4 @@
             "configuration": "Release"
         }
     ]
-} 
+}

@@ -1,14 +1,14 @@
 #pragma once
 
-#include "DataObject.hpp"
+#include "RenderWell/render_well_export.hpp"
 
-#include <string>
+#include "RenderWell/DataObject.hpp"
+
 #include <vector>
 
 namespace RenderWell {
-struct List : DataObject
+struct RENDERWELL_EXPORT List : DataObject
 {
-    std::vector<unsigned long> m_Ebooks;
-    std::string m_Name;
+  std::vector<unsigned long> m_Ebooks;
 };
 }
