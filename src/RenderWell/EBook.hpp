@@ -15,6 +15,7 @@ struct EBook : DataObject
 {
   std::string m_Author;
   std::vector<unsigned long> m_Lists;
+  AccessTime m_LastRead;
   fs::path m_Location;
   int m_PageNumber;
 };
