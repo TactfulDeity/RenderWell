@@ -1,9 +1,21 @@
-TEST_CASE("TC19: Delete eBook List:, "[ListManager]")
+#include "RenderWell/BackendManager.hpp"
+#include "RenderWell/Types.hpp"
+#include "RenderWell/DataBase.hpp"
+#include "RenderWell/EBook.hpp"
+
+TEST_CASE("TC19: Delete eBook List:", "[ListManager]")
 {
-    app.createNewList("Temp");
-    const std::vector<unsigned long>* newList = app.getList("Temp");
+    BackendManager controller = BackendManager();
+
+    controller.createNewList("Temp");
+    
+    const std::vector<unsigned long>* newList = controller.getList("Temp");
+    
     REQUIRE(newList!=nullptr);
+    
     unsigned long uuid = newList->getId();
-    app.deleteList(uuid);
-    REQUIRE(app.getList(uuid) == nullptr);
+    
+    controller.deleteList(uuid);
+    
+    REQUIRE(controller.getList(uuid) == nullptr);
 }
