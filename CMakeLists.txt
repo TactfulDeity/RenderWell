@@ -122,12 +122,23 @@ target_include_directories(RenderWell
 # ------------------------------------------------------------------------------
 # Testing
 # ------------------------------------------------------------------------------
-#if(RENDERWELL_BUILD_TESTS)
-#    include(CTest)
-#    add_subdirectory(test)
-#endif()
+option(RENDERWELL_BUILD_TESTS "Enable building RENDERWELL tests" ON)
+if(RENDERWELL_BUILD_TESTS)
+    include(CTest)
+    add_subdirectory(test)
+endif()
 
 # ------------------------------------------------------------------------------
 # Packaging
 # ------------------------------------------------------------------------------
 set(RENDERWELL_PACKAGE_NAMESPACE "RenderWell::")
+
+option(RENDERWELL_ENABLE_PACKAGING "Enables RENDERWELL packaging" ON)
+if(RENDERWELL_ENABLE_PACKAGING)
+  if(WIN32)
+    set(CPACK_GENERATOR ZIP)
+  else()
+    set(CPACK_GENERATOR TGZ)
+  endif()
+  include(CPack)
+endif()
