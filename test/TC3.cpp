@@ -12,13 +12,17 @@ using namespace RenderWell;
 
 TEST_CASE("TC03: Search eBooks:", "[BackendManager]")
 {
+  {
     BackendManager controller = BackendManager();
+    controller.updateSettingWrapper(std::string(k_InputDirKey),
+                                    std::string(UnitTest::k_TestFilesDir));
+  }
 
-    controller.updateSettingWrapper(std::string(k_InputDirKey), std::string(UnitTest::k_TestFilesDir));
+  BackendManager controller = BackendManager();
     
-    std::vector<unsigned long> uuidList = controller.search("a");
+  std::vector<unsigned long> uuidList = controller.search("a");
 
-    controller.updateSettingWrapper(std::string(k_InputDirKey), "");
+  controller.updateSettingWrapper(std::string(k_InputDirKey), "");
 
-    REQUIRE(!uuidList.empty());
+  REQUIRE(!uuidList.empty());
 }

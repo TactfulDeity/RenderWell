@@ -166,6 +166,11 @@ bool DataBase::insert(const std::shared_ptr<DataObject>& object)
 
 void DataBase::loadBooks(const fs::path& inputDirectory)
 {
+    if(!exists(inputDirectory))
+    {
+      return;
+    }
+
     for(const auto& entry : fs::directory_iterator(inputDirectory))
     {
       const auto filenameStr = entry.path().filename().string();
@@ -202,6 +207,11 @@ void DataBase::loadBooks(const fs::path& inputDirectory)
 
 void DataBase::loadLists()
 {
+    if(exists(fs::path(k_DataFilesDir.string() + ::k_ListsFileName)))
+    {
+      return;
+    }
+
     using json = nlohmann::json;
     json listsCache = {};
 

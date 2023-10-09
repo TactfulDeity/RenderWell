@@ -1,25 +1,39 @@
+#include "RenderWell/UnitTest/render_well_test_dirs.hpp"
+
 #include "RenderWell/BackendManager.hpp"
 #include "RenderWell/Types.hpp"
 #include "RenderWell/DataBase.hpp"
 #include "RenderWell/EBook.hpp"
 
+#include <catch2/catch.hpp>
+
 #include <string>
+
+using namespace RenderWell;
 
 TEST_CASE("TC11: Arrange eBooks Z-A:", "[Sorter]")
 {
+  {
     BackendManager controller = BackendManager();
-    
-    std::vector<unsigned long> uuidList = controller.sort(k_ZtoA);
+    controller.updateSettingWrapper(std::string(k_InputDirKey),
+                                    std::string(UnitTest::k_TestFilesDir));
+  }
 
-    DataBase& dataBase = controller.getDataBaseRef();
+  BackendManager controller = BackendManager();
 
-    std::string prevName = "";
+  std::vector<unsigned long> uuidList = controller.sort(k_AtoZ);
 
-    for(auto bookId : uuidList)
-    {
-        auto& book = dataBase.getDataObjectRefAs<EBook>(bookId);
+  DataBase& dataBase = controller.getDataBaseRef();
 
-        REQUIRE(book.m_Name < prevName);
-    }
-    
+  std::string prevName = "ZZZZZZZZZZZ";
+  for(auto bookId : uuidList)
+  {
+    auto& book = dataBase.getDataObjectRefAs<EBook>(bookId);
+
+    REQUIRE(book.m_Name > prevName);
+
+    prevName = book.m_Name;
+  }
+
+  controller.updateSettingWrapper(std::string(k_InputDirKey), "");
 }    

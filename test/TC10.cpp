@@ -13,20 +13,27 @@ using namespace RenderWell;
 
 TEST_CASE("TC10: Arrange eBooks A-Z:", "[Sorter]")
 {
+  {
     BackendManager controller = BackendManager();
+    controller.updateSettingWrapper(std::string(k_InputDirKey),
+                                    std::string(UnitTest::k_TestFilesDir));
+  }
 
-    controller.updateSettingWrapper(std::string(k_InputDirKey), std::string(UnitTest::k_TestFilesDir));
+  BackendManager controller = BackendManager();
     
-    std::vector<unsigned long> uuidList = controller.sort(k_AtoZ);
+  std::vector<unsigned long> uuidList = controller.sort(k_AtoZ);
 
-    DataBase& dataBase = controller.getDataBaseRef();
+  DataBase& dataBase = controller.getDataBaseRef();
 
-    std::string prevName = "";
-    for(auto bookId : uuidList)
-    {
-        auto& book = dataBase.getDataObjectRefAs<EBook>(bookId);
+  std::string prevName = "";
+  for(auto bookId : uuidList)
+  {
+    auto& book = dataBase.getDataObjectRefAs<EBook>(bookId);
 
-        REQUIRE(book.m_Name < prevName);
-    }
-    
+    REQUIRE(book.m_Name < prevName);
+
+    prevName = book.m_Name;
+  }
+
+  controller.updateSettingWrapper(std::string(k_InputDirKey), "");
 }    

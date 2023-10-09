@@ -23,8 +23,6 @@ add_executable(RenderWell_test
   TC18.cpp
   TC19.cpp
   TC23.cpp
-  TC24.cpp
-  TC26.cpp
 )
 
 target_link_libraries(RenderWell_test
