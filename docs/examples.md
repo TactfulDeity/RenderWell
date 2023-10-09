@@ -13,7 +13,7 @@ if(sortAtoZSignal)
 {
     std::vector<unsigned long> uuidList = controller.sort(k_AtoZ);
 
-    // update gui to just show new UUID list ordering
+    // update gui to just show new UUID list ordering from A to Z
 }
 ...
 
