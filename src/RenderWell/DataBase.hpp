@@ -25,7 +25,7 @@ public:
   //-----------------------------------------------------------
   // Object Modifiers
   //-----------------------------------------------------------
-  explicit DataBase(const fs::path& inputDirectory = {});
+  explicit DataBase(const fs::path& inputDirectory = {"/"});
   ~DataBase() noexcept = default;
 
   DataBase(const DataBase& obj) = default;

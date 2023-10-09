@@ -12,6 +12,9 @@
 
 using namespace RenderWell;
 
+//-----------------------------------------------------------
+// Object Modifiers
+//-----------------------------------------------------------
 BackendManager::BackendManager()
 : m_Settings({})
 , m_DataBase({})
@@ -24,6 +27,9 @@ BackendManager::~BackendManager() noexcept
   RenderWell::Settings::clearTempDirectory();
 }
 
+//-----------------------------------------------------------
+// Member Functions
+//-----------------------------------------------------------
 void BackendManager::removeWrapper(unsigned long listId, unsigned long bookId)
 {
   // Wrapper function for creating temp ListManager to remove ebook from list
@@ -138,6 +144,14 @@ DataBase& BackendManager::getDataBaseRef()
     return m_DataBase;
 }
 
+std::string BackendManager::getSetting(const std::string &key)
+{
+    return m_Settings.getValue(key);
+}
+
+//-----------------------------------------------------------
+// Private Member Functions
+//-----------------------------------------------------------
 void BackendManager::writeOut()
 {
   // write state (all lists to disk)
