@@ -45,6 +45,7 @@ public:
   // Getters and Setters
   //-----------------------------------------------------------
   DataBase& getDataBaseRef();
+  std::string getSetting(const std::string& key);
 
   //-----------------------------------------------------------
   // Private Member Variables
